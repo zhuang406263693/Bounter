@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="排序方法">
+        <menu>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_time"
+                android:title="按时间排序"
+                android:checkable="true"/>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_hot"
+                android:title="按热度排序"
+                android:checkable="true"/>
+        </menu>
+    </item>
+    <item android:title="任务类型">
+        <menu>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_study"
+                android:title="学习交流"
+                android:checkable="true"/>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_exchange"
+                android:title="物品交换"
+                android:checkable="true"/>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_team"
+                android:title="团队任务"
+                android:checkable="true"/>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_appointment"
+                android:title="用户互约"
+                android:checkable="true"/>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_waiting"
+                android:title="待办事项"
+                android:checkable="true"/>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_emotion"
+                android:title="情感专线"
+                android:checkable="true"/>
+        </menu>
+    </item>
+    <item android:title="赏金类型">
+        <menu>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_pay_zhifubao"
+                android:title="支付宝"
+                android:checkable="true"/>
+            <item
+                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/nav_pay_face"
+                android:title="当面交易"
+                android:checkable="true"/>
+        </menu>
+    </item>
+</menu>
