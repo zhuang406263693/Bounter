@@ -23,6 +23,8 @@ public class HttpUtil {
     public static final String LOGIN= "http://api.weafung.com/index.php/Auth/login";//登陆用接口
     public static final String REGISTER = "http://api.weafung.com/index.php/Auth/register";//注册用接口
     public static final String TASKLIST ="http://api.weafung.com/index.php/Hall/getTaskList";//任务列表
+    public static final String VERIFY="http://api.weafung.com/index.php/User/verify";//身份认证
+    public static final String PROFILE="http://api.weafung.com/index.php/User/getProfile";//获取用户信息
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     //页面的登陆
     public static String Login(String username,String password){
