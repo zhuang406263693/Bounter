@@ -18,6 +18,7 @@ import com.school.lenovo.bounter.Fragment.CenterFragment;
 import com.school.lenovo.bounter.Fragment.ManagerFragment;
 import com.school.lenovo.bounter.Fragment.SquareFragment;
 import com.school.lenovo.bounter.R;
+import com.school.lenovo.bounter.Util.ActivityController;
 
 /**
  * Created by lenovo on 2016/11/3.
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_container);
+        ActivityController.addActivity(this);
         squareFragment = new SquareFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_container,squareFragment).commit();
@@ -53,6 +55,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         navigationView  = (NavigationView) findViewById(R.id.main_nav_drawer);
 //        navigationView.getHeaderView(0).bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityController.removeActivity(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //重启默认打开任务广场
+        squareFragment = new SquareFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_container,squareFragment).commit();
     }
 
     @Override

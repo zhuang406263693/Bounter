@@ -2,9 +2,8 @@ package com.school.lenovo.bounter.Util;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.school.lenovo.bounter.Bean.LoginMessage;
-import com.school.lenovo.bounter.Bean.TaskList;
+import com.school.lenovo.bounter.Bean.TaskListContainer;
 
 import java.io.IOException;
 
@@ -87,8 +86,8 @@ public class HttpUtil {
             return "网络出错";
         }
     }
-    //任务获取，参数为：page:页数，size:每页的数量,order_by:排序方法,state:任务状态（详情看文档）
-    public static TaskList getTaskList(int page, int size, String order_by, int state){
+    //任务获取，参数为：page:页数，size:每页的数量,order_by:排序方法,state:任务状态（详情看文档），未完成
+    public static TaskListContainer getTaskList(int page, int size, String order_by, int state){
         String jsonString = StringToJson.TaskToJson(page, size, order_by, state);
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody requestBody =RequestBody.create(JSON,jsonString);
@@ -97,14 +96,15 @@ public class HttpUtil {
                 .method("Post",null)
                 .post(requestBody)
                 .build();
+        //返回为空表示无数据（网络问题等。。。）
         try {
             Response response = okHttpClient.newCall(request).execute();
             String result = new String(response.body().bytes());
             if(response.message().equals("OK")){
                 if (result.contains('"'+"error_code"+'"'+":0")){
                     Gson gson = new Gson();
-                    TaskList task = gson.fromJson(result,TaskList.class);
-                    return task;
+                    TaskListContainer taskListContainer = gson.fromJson(result,TaskListContainer.class);
+                    return taskListContainer;
                 }else{
                     return null;
                 }

@@ -35,6 +35,8 @@ public class SquareFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_square,container,false);
         setHasOptionsMenu(true);
+
+        //抽屉的设置
         drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar_square);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -44,6 +46,7 @@ public class SquareFragment extends Fragment{
                 drawer.openDrawer(Gravity.LEFT);
             }
         });
+        //浮动按钮的设置
         floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fragment_square_actionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

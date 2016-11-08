@@ -3,7 +3,7 @@ package com.school.lenovo.bounter.Bean;
 /**
  * Created by lenovo on 2016/11/5.
  */
-
+//登陆信息的保存
 public class LoginMessage {
     private MyData data;
 

@@ -12,7 +12,7 @@ import com.school.lenovo.bounter.R;
 /**
  * Created by lenovo on 2016/11/4.
  */
-//已接受任务信息（在ManagerFragment下）
+//ManagerFragment(任务管理下的fragment)，用于已接受任务信息的管理
 public class AcceptFragment extends Fragment{
     @Nullable
     @Override
