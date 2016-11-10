@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.school.lenovo.bounter.R;
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button login_button;
     EditText username;
     EditText password;
+    TextView textView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_button.setOnClickListener(this);
         username = (EditText) findViewById(R.id.activity_login_username);
         password = (EditText) findViewById(R.id.activity_login_password);
+        textView = (TextView) findViewById(R.id.openRegister);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -39,9 +50,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //获取用户名和密码，并开启线程进行信息获取
                 final String user = username.getText().toString();
                 final String pasw = password.getText().toString();
-                if (user == null){
+                if (user.equals("")){
                     username.setText("请输入用户名");
-                }else if(pasw == null){
+                }else if(pasw.equals("")){
                     password.setText("请输入密码");
                 }else{
                     new Thread(new Runnable() {
@@ -56,6 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 case "登陆成功":
                                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent);
+                                    finish();
                                     break;
                             }
                             runOnUiThread(new Runnable() {
