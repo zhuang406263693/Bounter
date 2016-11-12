@@ -3,9 +3,11 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.school.lenovo.bounter.Bean.LoginMessage;
+import com.school.lenovo.bounter.Bean.Task;
 import com.school.lenovo.bounter.Bean.TaskListContainer;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -87,8 +89,9 @@ public class HttpUtil {
         }
     }
     //任务获取，参数为：page:页数，size:每页的数量,order_by:排序方法,state:任务状态（详情看文档），未完成
-    public static TaskListContainer getTaskList(int page, int size, String order_by, int state){
+    public static List<Task> getTaskList(int page, int size, String order_by, int state){
         String jsonString = StringToJson.TaskToJson(page, size, order_by, state);
+        Log.d(TAG,jsonString.toString());
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody requestBody =RequestBody.create(JSON,jsonString);
         Request request = new Request.Builder()
@@ -100,11 +103,13 @@ public class HttpUtil {
         try {
             Response response = okHttpClient.newCall(request).execute();
             String result = new String(response.body().bytes());
+            Log.d(TAG,result.toString());
             if(response.message().equals("OK")){
                 if (result.contains('"'+"error_code"+'"'+":0")){
                     Gson gson = new Gson();
                     TaskListContainer taskListContainer = gson.fromJson(result,TaskListContainer.class);
-                    return taskListContainer;
+                    Log.d(TAG,taskListContainer.getData().getList().get(1).getReward());
+                    return taskListContainer.getData().getList();
                 }else{
                     return null;
                 }
@@ -113,6 +118,7 @@ public class HttpUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            Log.d(TAG,"WRONG");
             return null;
         }
     }

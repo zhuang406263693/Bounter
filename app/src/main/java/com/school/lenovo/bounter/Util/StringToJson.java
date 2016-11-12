@@ -27,10 +27,10 @@ public class StringToJson {
     }
     public static String TaskToJson(int page,int size,String order_by,int state){
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("page",page);
-        jsonObject.addProperty("size",size);
+        jsonObject.addProperty("page",""+page);
+        jsonObject.addProperty("size",""+size);
         jsonObject.addProperty("order_by",order_by);
-        jsonObject.addProperty("state",state);
+        jsonObject.addProperty("state",""+state);
         return jsonObject.toString();
     }
 

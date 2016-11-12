@@ -1,30 +1,65 @@
 package com.school.lenovo.bounter.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.school.lenovo.bounter.Adapter.SquareFragmentAdapter;
+import com.school.lenovo.bounter.Bean.Task;
+import com.school.lenovo.bounter.Bean.TaskListContainer;
 import com.school.lenovo.bounter.R;
+import com.school.lenovo.bounter.Util.HttpUtil;
+import com.school.lenovo.bounter.Util.RecyclerViewClickListener;
+import com.school.lenovo.bounter.Util.RecyclerViewDecoration;
+
+import java.util.List;
 
 /**
  * Created by lenovo on 2016/11/3.
  */
 
 public class SquareFragment extends Fragment{
+    private final int UPDATEUI = 0;
+    private Context context;
+    private List<Task> taskList = null;
     DrawerLayout drawer;
     Toolbar toolbar;
     FloatingActionButton floatingActionButton;
+    RecyclerView recyclerView;
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what){
+                case UPDATEUI:
+                    //更新ui
+                    if (taskList!=null){
+                        Log.d("info","进入了");
+                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        recyclerView.setAdapter(new SquareFragmentAdapter(context,taskList));
+                    }
+                    break;
+            }
+            return false;
+        }
+    });
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +67,26 @@ public class SquareFragment extends Fragment{
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_square,container,false);
         setHasOptionsMenu(true);
-
+        context = getContext();
         //抽屉的设置
         drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar_square);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_square_recyclerview);
+        recyclerView.addItemDecoration(new RecyclerViewDecoration(context,LinearLayoutManager.HORIZONTAL));
+        recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(context, recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                Toast.makeText(context,taskList.get(position).getTid(),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void OnItemLongClick(View view, int position) {
+
+            }
+        }));
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +103,16 @@ public class SquareFragment extends Fragment{
 
             }
         });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                taskList = HttpUtil.getTaskList(0,10,"time_desc",0);
+                Message message = new Message();
+                message.what = UPDATEUI;
+                handler.sendMessage(message);
+            }
+        }).start();
         return rootView;
     }
 
@@ -62,4 +120,5 @@ public class SquareFragment extends Fragment{
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.square_action_menu,menu);
     }
+
 }
