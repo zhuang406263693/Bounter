@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,6 +45,7 @@ public class SquareFragment extends Fragment{
     Toolbar toolbar;
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -52,6 +54,7 @@ public class SquareFragment extends Fragment{
                     //更新ui
                     if (taskList!=null){
                         Log.d("info","进入了");
+                        swipeRefreshLayout.setRefreshing(false);
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         recyclerView.setAdapter(new SquareFragmentAdapter(context,taskList));
                     }
@@ -74,6 +77,18 @@ public class SquareFragment extends Fragment{
         //抽屉的设置
         drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar_square);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.fragment_square_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        upDateUi();
+                    }
+                }).start();
+            }
+        });
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_square_recyclerview);
         recyclerView.addItemDecoration(new RecyclerViewDecoration(context,LinearLayoutManager.HORIZONTAL));
         recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(context, recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
@@ -107,10 +122,7 @@ public class SquareFragment extends Fragment{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                taskList = HttpUtil.getTaskList(0,10,"time_desc",0);
-                Message message = new Message();
-                message.what = UPDATEUI;
-                handler.sendMessage(message);
+                upDateUi();
             }
         }).start();
         return rootView;
@@ -120,5 +132,10 @@ public class SquareFragment extends Fragment{
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.square_action_menu,menu);
     }
-
+    private void upDateUi(){
+        taskList = HttpUtil.getTaskList(0,10,"time_desc",0);
+        Message message = new Message();
+        message.what = UPDATEUI;
+        handler.sendMessage(message);
+    }
 }

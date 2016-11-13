@@ -26,6 +26,8 @@ public class HttpUtil {
     public static final String TASKLIST ="http://api.weafung.com/index.php/Hall/getTaskList";//任务列表
     public static final String VERIFY="http://api.weafung.com/index.php/User/verify";//身份认证
     public static final String PROFILE="http://api.weafung.com/index.php/User/getProfile";//获取用户信息
+    public static final String MYRELEASE = "http://api.weafung.com/index.php/Task/getMyRelease";//获取我发布的任务
+    public static final String MYRECEIVE = "http://api.weafung.com/index.php/Task/getMyReceive";//获取我接受的任务
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     //页面的登陆
     public static String Login(String username,String password){
@@ -109,6 +111,69 @@ public class HttpUtil {
                     Gson gson = new Gson();
                     TaskListContainer taskListContainer = gson.fromJson(result,TaskListContainer.class);
                     Log.d(TAG,taskListContainer.getData().getList().get(1).getReward());
+                    return taskListContainer.getData().getList();
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d(TAG,"WRONG");
+            return null;
+        }
+    }
+    //查看我发布的任务
+    public static List<Task> getMyRelease(){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody =RequestBody.create(JSON,Token.Token);
+        Request request = new Request.Builder()
+                .url(MYRELEASE)
+                .method("Post",null)
+                .post(requestBody)
+                .build();
+        //返回为空表示无数据（网络问题等。。。）
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            String result = new String(response.body().bytes());
+            Log.d(TAG,result.toString());
+            if(response.message().equals("OK")){
+                if (result.contains('"'+"error_code"+'"'+":0")){
+                    Gson gson = new Gson();
+                    TaskListContainer taskListContainer = gson.fromJson(result,TaskListContainer.class);
+                    Log.d(TAG,taskListContainer.getData().getList().get(0).getReward());
+                    return taskListContainer.getData().getList();
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d(TAG,"WRONG");
+            return null;
+        }
+    }
+    public static List<Task> getMyReceive(){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody =RequestBody.create(JSON,Token.Token);
+        Request request = new Request.Builder()
+                .url(MYRECEIVE)
+                .method("Post",null)
+                .post(requestBody)
+                .build();
+        //返回为空表示无数据（网络问题等。。。）
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            String result = new String(response.body().bytes());
+            Log.d(TAG,"MYRECEIVE is "+result.toString());
+            if(response.message().equals("OK")){
+                if (!result.contains('"'+"count"+'"'+":0")){
+                    Gson gson = new Gson();
+                    TaskListContainer taskListContainer = gson.fromJson(result,TaskListContainer.class);
+//                    Log.d(TAG,taskListContainer.getData().getList().get(0).getReward());
                     return taskListContainer.getData().getList();
                 }else{
                     return null;
