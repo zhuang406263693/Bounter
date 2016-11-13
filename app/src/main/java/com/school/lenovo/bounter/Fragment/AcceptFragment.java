@@ -51,27 +51,27 @@ public class AcceptFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_manager_accept,container,false);
         context = getContext();
         recyclerView = (RecyclerView) view.findViewById(R.id.manager_accept_rv);
-//        recyclerView.addItemDecoration(new RecyclerViewDecoration(context,LinearLayoutManager.HORIZONTAL));
-//        recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(context, recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
-//            @Override
-//            public void OnItemClick(View view, int position) {
-//                Toast.makeText(context,taskList.get(position).getTid(),Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void OnItemLongClick(View view, int position) {
-//
-//            }
-//        }));
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                taskList = HttpUtil.getMyReceive();
-//                Message message = new Message();
-//                message.what = UPDATEUI;
-//                handler.sendMessage(message);
-//            }
-//        }).start();
+        recyclerView.addItemDecoration(new RecyclerViewDecoration(context,LinearLayoutManager.HORIZONTAL));
+        recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(context, recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                Toast.makeText(context,taskList.get(position).getTid(),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void OnItemLongClick(View view, int position) {
+
+            }
+        }));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                taskList = HttpUtil.getMyReceive();
+                Message message = new Message();
+                message.what = UPDATEUI;
+                handler.sendMessage(message);
+            }
+        }).start();
         return view;
     }
 }

@@ -27,16 +27,16 @@ import java.util.List;
  */
 //ManagerFragment(任务管理下的fragment)，用于已发布任务信息的管理
 public class PublishFragment extends Fragment{
-    private Context context;
-    private List<Task> taskList;
-    private RecyclerView recyclerView;
     private final int UPDATEUI = 0;
-    private Handler handler = new Handler(new Handler.Callback() {
+    private Context context;
+    RecyclerView recyclerView;
+    List<Task> taskList;
+    Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case UPDATEUI:
-                    if (taskList!=null){
+                    if (taskList!=null) {
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                         recyclerView.setAdapter(new SquareFragmentAdapter(context,taskList));
                     }
@@ -50,8 +50,8 @@ public class PublishFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manager_publish,container,false);
         context = getContext();
-        recyclerView = (RecyclerView) view.findViewById(R.id.manager_accept_rv);
-        recyclerView.addItemDecoration(new RecyclerViewDecoration(context, LinearLayoutManager.HORIZONTAL));
+        recyclerView = (RecyclerView) view.findViewById(R.id.manager_publish_rv);
+        recyclerView.addItemDecoration(new RecyclerViewDecoration(context,LinearLayoutManager.HORIZONTAL));
         recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(context, recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {

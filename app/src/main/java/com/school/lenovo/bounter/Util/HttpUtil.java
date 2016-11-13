@@ -137,7 +137,7 @@ public class HttpUtil {
         try {
             Response response = okHttpClient.newCall(request).execute();
             String result = new String(response.body().bytes());
-            Log.d(TAG,result.toString());
+            Log.d(TAG,"getMyRelease is "+result.toString());
             if(response.message().equals("OK")){
                 if (result.contains('"'+"error_code"+'"'+":0")){
                     Gson gson = new Gson();
