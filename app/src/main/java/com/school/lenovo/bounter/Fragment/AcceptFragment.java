@@ -57,7 +57,6 @@ public class AcceptFragment extends Fragment{
             public void OnItemClick(View view, int position) {
                 Toast.makeText(context,taskList.get(position).getTid(),Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void OnItemLongClick(View view, int position) {
 

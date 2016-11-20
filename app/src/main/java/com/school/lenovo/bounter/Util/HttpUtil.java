@@ -1,4 +1,6 @@
 package com.school.lenovo.bounter.Util;
+import android.os.Handler;
+import android.telecom.Call;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -9,6 +11,7 @@ import com.school.lenovo.bounter.Bean.TaskListContainer;
 import java.io.IOException;
 import java.util.List;
 
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,13 +24,16 @@ import okhttp3.Response;
 //http://api.weafung.com/docs/index.php（接口文档）
 public class HttpUtil {
     private static final String TAG = "HttpUtil";
-    public static final String LOGIN= "http://api.weafung.com/index.php/Auth/login";//登陆用接口
+    //public static final String LOGIN= "http://api.weafung.com/index.php/Auth/login";//登陆用接口
     public static final String REGISTER = "http://api.weafung.com/index.php/Auth/register";//注册用接口
     public static final String TASKLIST ="http://api.weafung.com/index.php/Hall/getTaskList";//任务列表
     public static final String VERIFY="http://api.weafung.com/index.php/User/verify";//身份认证
     public static final String PROFILE="http://api.weafung.com/index.php/User/getProfile";//获取用户信息
     public static final String MYRELEASE = "http://api.weafung.com/index.php/Task/getMyRelease";//获取我发布的任务
     public static final String MYRECEIVE = "http://api.weafung.com/index.php/Task/getMyReceive";//获取我接受的任务
+
+    public static final String BASE = "http://api.weafung.com/index.php/";
+    public static final String LOGIN = "Auth/login";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     //页面的登陆
     public static String Login(String username,String password){
@@ -35,11 +41,12 @@ public class HttpUtil {
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody requestBody =RequestBody.create(JSON,jsonString);
         Request request = new Request.Builder()
-                .url(LOGIN)
+                .url(BASE + LOGIN)
                 .method("Post",null)
                 .post(requestBody)
                 .build();
         try {
+            okHttpClient.newCall(request).execute();
             Response response = okHttpClient.newCall(request).execute();
             if (response.message().equals("OK")){
                 String result = new String(response.body().bytes());

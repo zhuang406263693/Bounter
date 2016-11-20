@@ -56,6 +56,7 @@ public class SquareFragment extends Fragment{
                         Log.d("info","进入了");
                         swipeRefreshLayout.setRefreshing(false);
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+//                        squareFragmentAdapter = new SquareFragmentAdapter(context,taskList);
                         recyclerView.setAdapter(new SquareFragmentAdapter(context,taskList));
                     }
                     break;
@@ -125,6 +126,7 @@ public class SquareFragment extends Fragment{
                 upDateUi();
             }
         }).start();
+
         return rootView;
     }
 
