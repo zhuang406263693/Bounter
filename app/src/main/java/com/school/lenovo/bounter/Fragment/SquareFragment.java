@@ -1,6 +1,7 @@
 package com.school.lenovo.bounter.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.school.lenovo.bounter.Activity.ReleaseActivity;
 import com.school.lenovo.bounter.Adapter.SquareFragmentAdapter;
 import com.school.lenovo.bounter.Bean.Task;
 import com.school.lenovo.bounter.Bean.TaskListContainer;
@@ -39,8 +41,13 @@ import java.util.List;
 
 public class SquareFragment extends Fragment{
     private final int UPDATEUI = 0;
+    private final int ADDITEM = 1;
+    private int flag = 1;
+    private int page = 0;
     private Context context;
     private List<Task> taskList = null;
+    private List<Task> tempList = null;
+    private SquareFragmentAdapter squareFragmentAdapter;
     DrawerLayout drawer;
     Toolbar toolbar;
     FloatingActionButton floatingActionButton;
@@ -55,11 +62,17 @@ public class SquareFragment extends Fragment{
                     if (taskList!=null){
                         Log.d("info","进入了");
                         swipeRefreshLayout.setRefreshing(false);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//                        squareFragmentAdapter = new SquareFragmentAdapter(context,taskList);
-                        recyclerView.setAdapter(new SquareFragmentAdapter(context,taskList));
+                        squareFragmentAdapter.initItem(taskList);
+                        squareFragmentAdapter.notifyDataSetChanged();
                     }
                     break;
+                case ADDITEM:
+                    if (tempList!=null){
+                        taskList.addAll(tempList);
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                    }else{
+                        flag = 0;
+                    }
             }
             return false;
         }
@@ -90,7 +103,10 @@ public class SquareFragment extends Fragment{
                 }).start();
             }
         });
+        squareFragmentAdapter = new SquareFragmentAdapter(context);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.fragment_square_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(squareFragmentAdapter);
         recyclerView.addItemDecoration(new RecyclerViewDecoration(context,LinearLayoutManager.HORIZONTAL));
         recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(context, recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
             @Override
@@ -103,6 +119,25 @@ public class SquareFragment extends Fragment{
 
             }
         }));
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int lastVisibleItem = taskList.size();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem+1 == recyclerView.getAdapter().getItemCount()&&flag!=0){
+                    Log.d("add","addItem");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            page++;
+                            addItem(page);
+                        }
+                    }).start();
+                }
+
+            }
+        });
+
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +151,9 @@ public class SquareFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 //在这里打开添加任务的界面
-
+                Intent intent = new Intent(getActivity(), ReleaseActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
 
@@ -135,9 +172,17 @@ public class SquareFragment extends Fragment{
         inflater.inflate(R.menu.square_action_menu,menu);
     }
     private void upDateUi(){
+        flag = 1;
+        page = 0;
         taskList = HttpUtil.getTaskList(0,10,"time_desc",0);
         Message message = new Message();
         message.what = UPDATEUI;
+        handler.sendMessage(message);
+    }
+    private void addItem(int page){
+        tempList = HttpUtil.getTaskList(page,10,"time_desc",0);
+        Message message = new Message();
+        message.what = ADDITEM;
         handler.sendMessage(message);
     }
 }

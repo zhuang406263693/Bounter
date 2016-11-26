@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import java.util.List;
 public class AcceptFragment extends Fragment{
     private final int UPDATEUI = 0;
     private Context context;
+    SquareFragmentAdapter squareFragmentAdapter;
     RecyclerView recyclerView;
     List<Task> taskList;
     Handler handler = new Handler(new Handler.Callback() {
@@ -37,8 +39,8 @@ public class AcceptFragment extends Fragment{
             switch (msg.what){
                 case UPDATEUI:
                     if (taskList!=null) {
-                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                        recyclerView.setAdapter(new SquareFragmentAdapter(context,taskList));
+                        squareFragmentAdapter.initItem(taskList);
+                        squareFragmentAdapter.notifyDataSetChanged();
                     }
                     break;
             }
@@ -50,7 +52,10 @@ public class AcceptFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manager_accept,container,false);
         context = getContext();
+        squareFragmentAdapter = new SquareFragmentAdapter(context);
         recyclerView = (RecyclerView) view.findViewById(R.id.manager_accept_rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(squareFragmentAdapter);
         recyclerView.addItemDecoration(new RecyclerViewDecoration(context,LinearLayoutManager.HORIZONTAL));
         recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(context, recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
             @Override

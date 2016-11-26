@@ -34,5 +34,18 @@ public class StringToJson {
         jsonObject.addProperty("state",""+state);
         return jsonObject.toString();
     }
-
+    public static String ReleaseToJson(String token,String title,String address,String content,String start,String end,String number,String label,String reward,String image){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("token",token);
+        jsonObject.addProperty("title",title);
+        jsonObject.addProperty("address",address);
+        jsonObject.addProperty("content",content);
+        jsonObject.addProperty("start",start);
+        jsonObject.addProperty("end",end);
+        jsonObject.addProperty("number",number);
+        jsonObject.addProperty("label",label);
+        jsonObject.addProperty("reward",reward);
+        jsonObject.addProperty("image",image);
+        return jsonObject.toString();
+    }
 }

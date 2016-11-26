@@ -29,6 +29,7 @@ import java.util.List;
 public class PublishFragment extends Fragment{
     private final int UPDATEUI = 0;
     private Context context;
+    private SquareFragmentAdapter squareFragmentAdapter;
     RecyclerView recyclerView;
     List<Task> taskList;
     Handler handler = new Handler(new Handler.Callback() {
@@ -37,8 +38,8 @@ public class PublishFragment extends Fragment{
             switch (msg.what){
                 case UPDATEUI:
                     if (taskList!=null) {
-                        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                        recyclerView.setAdapter(new SquareFragmentAdapter(context,taskList));
+                        squareFragmentAdapter.initItem(taskList);
+                        squareFragmentAdapter.notifyDataSetChanged();
                     }
                     break;
             }
@@ -50,7 +51,10 @@ public class PublishFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manager_publish,container,false);
         context = getContext();
+        squareFragmentAdapter = new SquareFragmentAdapter(context);
         recyclerView = (RecyclerView) view.findViewById(R.id.manager_publish_rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(squareFragmentAdapter);
         recyclerView.addItemDecoration(new RecyclerViewDecoration(context,LinearLayoutManager.HORIZONTAL));
         recyclerView.addOnItemTouchListener(new RecyclerViewClickListener(context, recyclerView, new RecyclerViewClickListener.OnItemClickListener() {
             @Override
