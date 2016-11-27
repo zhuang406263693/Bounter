@@ -5,15 +5,18 @@ import android.telecom.Call;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.school.lenovo.bounter.Bean.ImageUrlData;
 import com.school.lenovo.bounter.Bean.LoginMessage;
 import com.school.lenovo.bounter.Bean.Task;
 import com.school.lenovo.bounter.Bean.TaskListContainer;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Callback;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -36,6 +39,7 @@ public class HttpUtil {
     public static final String VERIFY = "User/verify";//身份认证
     public static final String PROFILE = "User/getProfile";//获取用户信息
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
     //页面的登陆
     public static String Login(String username, String password) {
@@ -48,7 +52,6 @@ public class HttpUtil {
                 .post(requestBody)
                 .build();
         try {
-            okHttpClient.newCall(request).execute();
             Response response = okHttpClient.newCall(request).execute();
             if (response.message().equals("OK")) {
                 String result = new String(response.body().bytes());
@@ -207,9 +210,10 @@ public class HttpUtil {
         }
     }
 
-    public static String Release(String token, String title, String address, String content, String start, String end, String number, String label, String reward, String image) {
+    public static String Release(String token, String title, String address, String content, String start, String end, String number, String label, String reward, String[] image,int imageCount) {
         OkHttpClient okHttpClient = new OkHttpClient();
-        String jsonString = StringToJson.ReleaseToJson(token, title, address, content, start, end, number, label, reward, image);
+        String jsonString = StringToJson.ReleaseToJson(token, title, address, content, start, end, number, label, reward, image,imageCount);
+        Log.d(TAG,jsonString);
         RequestBody requestBody = RequestBody.create(JSON, jsonString);
         Request request = new Request.Builder()
                 .url(BASE + RELEASE)
@@ -220,9 +224,9 @@ public class HttpUtil {
         try {
             Response response = okHttpClient.newCall(request).execute();
             String result = new String(response.body().bytes());
-            Log.d(TAG,result);
+            Log.d(TAG+"!!!",result);
             if (response.message().equals("OK")) {
-                if (!result.contains('"' + "error_code" + '"' + ":0")) {
+                if (result.contains('"' + "error_code" + '"' + ":0")) {
                     Log.d(TAG,"OK");
                     return "发布成功";
                 } else {
@@ -234,6 +238,31 @@ public class HttpUtil {
         } catch (IOException e) {
             e.printStackTrace();
             return "发布失败";
+        }
+    }
+    public static String getImageUrl(String imageUrl){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        File file = new File(imageUrl);
+        if (file!=null){
+            builder.addFormDataPart("img",file.getName(), RequestBody.create(MEDIA_TYPE_PNG,file));
+        }
+        MultipartBody requestBody = builder.build();
+        Request request = new Request.Builder()
+                .url("http://www.hs97.cn:3000/upload")
+                .post(requestBody)
+                .build();
+
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            String result = new String(response.body().bytes());
+            Log.d("result",result);
+            Gson gson = new Gson();
+            ImageUrlData imageUrlData = gson.fromJson(result, ImageUrlData.class);
+            return imageUrlData.getSuccess();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

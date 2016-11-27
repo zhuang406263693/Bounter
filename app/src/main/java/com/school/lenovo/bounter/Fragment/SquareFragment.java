@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.school.lenovo.bounter.Activity.ReleaseActivity;
 import com.school.lenovo.bounter.Adapter.SquareFragmentAdapter;
 import com.school.lenovo.bounter.Bean.Task;
@@ -32,6 +33,8 @@ import com.school.lenovo.bounter.R;
 import com.school.lenovo.bounter.Util.HttpUtil;
 import com.school.lenovo.bounter.Util.RecyclerViewClickListener;
 import com.school.lenovo.bounter.Util.RecyclerViewDecoration;
+
+import org.json.JSONArray;
 
 import java.util.List;
 
@@ -184,5 +187,7 @@ public class SquareFragment extends Fragment{
         Message message = new Message();
         message.what = ADDITEM;
         handler.sendMessage(message);
+
     }
+
 }

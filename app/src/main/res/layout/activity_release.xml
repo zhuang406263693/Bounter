@@ -58,7 +58,44 @@
                     android:textColor="#000"
                     android:textSize="16sp" />
             </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                android:layout_marginLeft="8dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/activity_release_iv_1"
+                    android:background="#f3f3f3"
+                    android:src="@drawable/ic_add_grey600_48dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:id="@+id/activity_release_iv_2"
+                    android:visibility="gone"
+                    android:layout_marginRight="16dp"
+                    android:background="#f3f3f3"
+                    android:src="@drawable/ic_add_grey600_48dp"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+                <ImageView
+                    android:id="@+id/activity_release_iv_3"
+                    android:visibility="gone"
+                    android:layout_marginRight="16dp"
+                    android:background="#f3f3f3"
+                    android:src="@drawable/ic_add_grey600_48dp"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
 
+                <ImageView
+                    android:id="@+id/activity_release_iv_4"
+                    android:visibility="visible"
+                    android:background="#f3f3f3"
+                    android:src="@drawable/ic_add_grey600_48dp"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

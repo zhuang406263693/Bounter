@@ -1,7 +1,12 @@
 package com.school.lenovo.bounter.Util;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
 
 /**
  * Created by lenovo on 2016/11/5.
@@ -34,7 +39,7 @@ public class StringToJson {
         jsonObject.addProperty("state",""+state);
         return jsonObject.toString();
     }
-    public static String ReleaseToJson(String token,String title,String address,String content,String start,String end,String number,String label,String reward,String image){
+    public static String ReleaseToJson(String token,String title,String address,String content,String start,String end,String number,String label,String reward,String[] image,int ImageCoount){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("token",token);
         jsonObject.addProperty("title",title);
@@ -45,7 +50,17 @@ public class StringToJson {
         jsonObject.addProperty("number",number);
         jsonObject.addProperty("label",label);
         jsonObject.addProperty("reward",reward);
-        jsonObject.addProperty("image",image);
+//        jsonObject.addProperty("image",image);
+        String tempString = "";
+        for (int i = 0; i <= ImageCoount; i++) {
+            Log.d("info",image[i]);
+            if (i== image.length){
+                tempString+=image[i];
+            }else{
+                tempString+=image[i]+",";
+            }
+        }
+        jsonObject.addProperty("image",tempString);
         return jsonObject.toString();
     }
 }
