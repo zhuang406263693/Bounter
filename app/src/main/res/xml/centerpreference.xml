@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:defaultValue="false">
+    <Preference
+        android:layout="@layout/preference_item_name"
+        android:icon="@mipmap/ic_launcher"
+        android:summary="查看或编辑个人主页"
+        android:key="setting"
+        android:title="姓名"></Preference>
+    <PreferenceCategory
+        android:layout="@layout/preference_widge">
+        <Preference
+            android:layout="@layout/preference_item_life"
+            android:key="temp1"
+            android:icon="@mipmap/ic_launcher"
+            android:title="历史足迹" />
+        <Preference
+            android:layout="@layout/preference_item_life"
+            android:key="temp2"
+            android:icon="@mipmap/ic_launcher"
+            android:title="分类排名" />
+        <Preference
+            android:layout="@layout/preference_item_life"
+            android:key="temp3"
+            android:icon="@mipmap/ic_launcher"
+            android:title="个人信箱" />
+        <Preference
+            android:layout="@layout/preference_item_life"
+            android:key="temp4"
+            android:icon="@mipmap/ic_launcher"
+            android:title="历史成就" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/preference_widge">
+        <CheckBoxPreference
+            android:layout="@layout/preference_item_setting_2"
+            android:key="temp5"
+            android:title="省流量模式"
+            android:summary="仅在wifi环境下加载图片">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:layout="@layout/preference_item_setting"
+            android:key="temp6"
+            android:title="夜间模式">
+        </CheckBoxPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/preference_widge">
+        <Preference android:layout="@layout/preference_item_bottom"/>
+    </PreferenceCategory>
+    <Preference android:layout="@layout/preference_widge2"/>
+</PreferenceScreen>

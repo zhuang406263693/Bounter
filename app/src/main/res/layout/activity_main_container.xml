@@ -11,7 +11,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <include layout="@layout/title_bar_all"/>
         <FrameLayout
+            android:layout_below="@+id/toolbar_all"
             android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

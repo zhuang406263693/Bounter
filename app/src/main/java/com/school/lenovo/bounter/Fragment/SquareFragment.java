@@ -1,5 +1,6 @@
 package com.school.lenovo.bounter.Fragment;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +42,7 @@ import java.util.List;
  * Created by lenovo on 2016/11/3.
  */
 
-public class SquareFragment extends Fragment{
+public class SquareFragment extends Fragment {
     private final int UPDATEUI = 0;
     private final int ADDITEM = 1;
     private int flag = 1;
@@ -51,8 +51,8 @@ public class SquareFragment extends Fragment{
     private List<Task> taskList = null;
     private List<Task> tempList = null;
     private SquareFragmentAdapter squareFragmentAdapter;
-    DrawerLayout drawer;
     Toolbar toolbar;
+    DrawerLayout drawerLayout;
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -90,10 +90,9 @@ public class SquareFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_square,container,false);
         setHasOptionsMenu(true);
-        context = getContext();
+        context = getActivity().getBaseContext();
         //抽屉的设置
-        drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar_square);
+//        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar_square);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.fragment_square_refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -141,13 +140,7 @@ public class SquareFragment extends Fragment{
             }
         });
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawer.openDrawer(Gravity.LEFT);
-            }
-        });
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         //浮动按钮的设置
         floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.fragment_square_actionButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -168,6 +161,22 @@ public class SquareFragment extends Fragment{
         }).start();
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_all);
+        drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        toolbar.setTitle("任务中心");
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
     }
 
     @Override

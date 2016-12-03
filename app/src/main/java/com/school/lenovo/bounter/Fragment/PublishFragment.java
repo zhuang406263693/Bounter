@@ -1,11 +1,11 @@
 package com.school.lenovo.bounter.Fragment;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,7 +26,7 @@ import java.util.List;
  * Created by lenovo on 2016/11/4.
  */
 //ManagerFragment(任务管理下的fragment)，用于已发布任务信息的管理
-public class PublishFragment extends Fragment{
+public class PublishFragment extends Fragment {
     private final int UPDATEUI = 0;
     private Context context;
     private SquareFragmentAdapter squareFragmentAdapter;
@@ -50,7 +50,7 @@ public class PublishFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manager_publish,container,false);
-        context = getContext();
+        context = getActivity().getBaseContext();
         squareFragmentAdapter = new SquareFragmentAdapter(context);
         recyclerView = (RecyclerView) view.findViewById(R.id.manager_publish_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));

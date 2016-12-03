@@ -3,7 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <include layout="@layout/title_bar_square"/>
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_below="@+id/toolbar_square"
         android:id="@+id/fragment_square_refresh"

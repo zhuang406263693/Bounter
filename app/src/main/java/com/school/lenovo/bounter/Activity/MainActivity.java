@@ -7,6 +7,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -35,13 +37,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_container);
         ActivityController.addActivity(this);
-        squareFragment = new SquareFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_container,squareFragment).commit();
-        setBottomNavigationBar();
         setNavigationView();
-    }
+        setBottomNavigationBar();
+        squareFragment = new SquareFragment();
+//        centerFragment = new CenterFragment();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.main_container,squareFragment).commit();
 
+    }
     public void setBottomNavigationBar() {
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.main_nav_bottom);
         bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_launcher,"Square"))
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         super.onResume();
         //重启默认打开任务广场
         squareFragment = new SquareFragment();
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .replace(R.id.main_container,squareFragment).commit();
     }
 
@@ -77,19 +80,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         switch (position){
             case 0:
                 squareFragment = new SquareFragment();
-                getSupportFragmentManager().beginTransaction()
+                getFragmentManager().beginTransaction()
                         .replace(R.id.main_container,squareFragment)
                         .commit();
                 break;
             case 1:
                 managerFragment = new ManagerFragment();
-                getSupportFragmentManager().beginTransaction()
+                getFragmentManager().beginTransaction()
                         .replace(R.id.main_container,managerFragment)
                         .commit();
                 break;
             case 2:
                 centerFragment = new CenterFragment();
-                getSupportFragmentManager().beginTransaction()
+                getFragmentManager().beginTransaction()
                         .replace(R.id.main_container,centerFragment)
                         .commit();
                 break;
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_time:
+                Log.d("info","time");
                 break;
             case R.id.nav_hot:
                 break;

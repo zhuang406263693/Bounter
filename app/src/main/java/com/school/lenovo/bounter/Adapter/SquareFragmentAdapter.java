@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.school.lenovo.bounter.Bean.Task;
-import com.school.lenovo.bounter.Fragment.SquareFragment;
 import com.school.lenovo.bounter.R;
 
 import java.util.List;
