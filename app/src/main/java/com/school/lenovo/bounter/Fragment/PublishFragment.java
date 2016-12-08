@@ -27,6 +27,7 @@ import java.util.List;
  */
 //ManagerFragment(任务管理下的fragment)，用于已发布任务信息的管理
 public class PublishFragment extends Fragment {
+    private View view;
     private final int UPDATEUI = 0;
     private Context context;
     private SquareFragmentAdapter squareFragmentAdapter;
@@ -49,7 +50,14 @@ public class PublishFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_manager_publish,container,false);
+//        if (view!=null){
+//            ViewGroup parent = (ViewGroup) view.getParent();
+//            if (parent!=null){
+//                parent.removeView(view);
+//            }
+//            return view;
+//        }
+        view = inflater.inflate(R.layout.fragment_manager_publish,container,false);
         context = getActivity().getBaseContext();
         squareFragmentAdapter = new SquareFragmentAdapter(context);
         recyclerView = (RecyclerView) view.findViewById(R.id.manager_publish_rv);

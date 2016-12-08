@@ -1,20 +1,21 @@
 package com.school.lenovo.bounter.Util;
 
-import android.os.Handler;
-import android.telecom.Call;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.school.lenovo.bounter.Bean.ImageUrlData;
+import com.school.lenovo.bounter.Bean.IntegrityTask;
 import com.school.lenovo.bounter.Bean.LoginMessage;
 import com.school.lenovo.bounter.Bean.Task;
 import com.school.lenovo.bounter.Bean.TaskListContainer;
+import com.school.lenovo.bounter.Bean.User;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -32,10 +33,12 @@ public class HttpUtil {
     public static final String BASE = "http://api.weafung.com/index.php/";
     public static final String LOGIN = "Auth/login";//登陆
     public static final String REGISTER = "Auth/register";//注册
+    public static final String CHANGEPASSWORD = "Password/change";
     public static final String TASKLIST = "Hall/getTaskList";//任务列表
     public static final String MYRELEASE = "Task/getMyRelease";//我发布的任务
     public static final String MYRECEIVE = "Task/getMyReceive";//我接受的任务
     public static final String RELEASE = "Task/release";//发布任务
+    public static final String BROWSE = "Task/browse"; //查看任务
     public static final String VERIFY = "User/verify";//身份认证
     public static final String PROFILE = "User/getProfile";//获取用户信息
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -55,6 +58,7 @@ public class HttpUtil {
             Response response = okHttpClient.newCall(request).execute();
             if (response.message().equals("OK")) {
                 String result = new String(response.body().bytes());
+                Log.d(TAG,result);
                 if (!result.contains('"' + "error_code" + '"' + ":0")) {
                     Log.i(TAG, "密码出错");
                     return "密码出错";
@@ -62,8 +66,13 @@ public class HttpUtil {
                     Log.i(TAG, "登陆成功");
                     Gson gson = new Gson();
                     LoginMessage loginMessage = gson.fromJson(result, LoginMessage.class);
-                    Token.Token = loginMessage.getData().getToken();
-                    Log.i(TAG, Token.Token);
+                    UserMessage.Token = loginMessage.getData().getToken();
+                    UserMessage.username = loginMessage.getData().getUser().getUsername();
+                    UserMessage.portrait = loginMessage.getData().getUser().getPortrait();
+                    UserMessage.level = loginMessage.getData().getUser().getLevel();
+                    UserMessage.phone = loginMessage.getData().getUser().getPhone();
+                    UserMessage.sn = loginMessage.getData().getUser().getSn();
+                    Log.i(TAG+"name", UserMessage.username);
                     return "登陆成功";
                 }
             } else {
@@ -103,7 +112,95 @@ public class HttpUtil {
             return "网络出错";
         }
     }
+    public static String ChangePassword(String password_old,String password_1,String password_2){
+        String jsonString = StringToJson.ChangeToJson(UserMessage.Token,password_old,password_1,password_2);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(JSON,jsonString);
+        Request request = new Request.Builder()
+                .url(BASE+CHANGEPASSWORD)
+                .method("Post",null)
+                .build();
+            try {
+                Response response = okHttpClient.newCall(request).execute();
+                String result = new String(response.body().bytes());
+                Log.d(TAG,result);
+                if (response.message().equals("OK")){
+                    if (result.contains('"' + "error_code" + '"' + ":0")){
+                        return "修改成功";
+                    }else{
+                        return "修改失败";
+                    }
+                }
+                return "修改失败";
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "修改失败";
+            }
+    }
+    public static String snVerify(String sn,String password){
+        String jsonString = StringToJson.VerifyToJson(UserMessage.Token,sn,password);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(JSON,jsonString);
+        Request request = new Request.Builder()
+                .url(BASE+VERIFY)
+                .method("Post",null)
+                .post(requestBody)
+                .build();
 
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            String result = new String(response.body().bytes());
+            if (response.message().equals("OK")){
+                if (response.message().equals("OK")) {
+                    if (result.contains('"' + "error_code" + '"' + ":0")) {
+                        Log.d(TAG,"OK");
+                        return "认证成功";
+                    }else{
+                        return "认证失败";
+                    }
+                }else{
+                    return "认证失败";
+                }
+            }else{
+                return "认证失败";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "认证失败";
+        }
+
+    }
+    public static IntegrityTask getIntegrityTask(String tid){
+        String jsonString = StringToJson.TidToJson(tid);
+        Log.d(TAG,jsonString);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(JSON,jsonString);
+        Request request = new Request.Builder()
+                .url(BASE+BROWSE)
+                .method("Post",null)
+                .post(requestBody)
+                .build();
+
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            String result = new String(response.body().bytes());
+            Log.d(TAG,result);
+            if (response.message().equals("OK")){
+                if (result.contains('"' + "error_code" + '"' + ":0")){
+                    Gson gson = new Gson();
+                    IntegrityTask integrityTask = gson.fromJson(result,IntegrityTask.class);
+                    return integrityTask;
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     //任务获取，参数为：page:页数，size:每页的数量,order_by:排序方法,state:任务状态（详情看文档），未完成
     public static List<Task> getTaskList(int page, int size, String order_by, int state) {
         String jsonString = StringToJson.TaskToJson(page, size, order_by, state);
@@ -146,7 +243,7 @@ public class HttpUtil {
     //查看我发布的任务
     public static List<Task> getMyRelease() {
         OkHttpClient okHttpClient = new OkHttpClient();
-        String jsonString = StringToJson.TokenToJson(Token.Token);
+        String jsonString = StringToJson.TokenToJson(UserMessage.Token);
         RequestBody requestBody = RequestBody.create(JSON, jsonString);
         Request request = new Request.Builder()
                 .url(BASE + MYRELEASE)
@@ -159,7 +256,7 @@ public class HttpUtil {
             String result = new String(response.body().bytes());
             Log.d(TAG, "getMyRelease is " + result.toString());
             if (response.message().equals("OK")) {
-                if (result.contains('"' + "error_code" + '"' + ":0")) {
+                if (result.contains('"' + "error_code" + '"' + ":0")&&!result.contains('"'+"count"+'"'+":0")) {
                     Gson gson = new Gson();
                     TaskListContainer taskListContainer = gson.fromJson(result, TaskListContainer.class);
                     Log.d(TAG, taskListContainer.getData().getList().get(0).getReward());
@@ -179,7 +276,7 @@ public class HttpUtil {
 
     public static List<Task> getMyReceive() {
         OkHttpClient okHttpClient = new OkHttpClient();
-        String jsonString = StringToJson.TokenToJson(Token.Token);
+        String jsonString = StringToJson.TokenToJson(UserMessage.Token);
         RequestBody requestBody = RequestBody.create(JSON, jsonString);
         Request request = new Request.Builder()
                 .url(BASE + MYRECEIVE)
@@ -192,7 +289,7 @@ public class HttpUtil {
             String result = new String(response.body().bytes());
             Log.d(TAG, "MYRECEIVE is " + result.toString());
             if (response.message().equals("OK")) {
-                if (!result.contains('"' + "count" + '"' + ":0")) {
+                if (result.contains('"' + "error_code" + '"' + ":0")&&!result.contains('"'+"count"+'"'+":0")) {
                     Gson gson = new Gson();
                     TaskListContainer taskListContainer = gson.fromJson(result, TaskListContainer.class);
 //                    Log.d(TAG,taskListContainer.getData().getList().get(0).getReward());

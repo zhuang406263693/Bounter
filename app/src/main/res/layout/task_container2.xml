@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/title_bar_all"/>
+
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/task_container_title"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:text="SOUTHEAST ASIGN CHICKEN CONFIT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/task_container_label"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:text="pre shoots bean sprout,pumpkin mash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/task_container_image"
+                android:layout_margin="8dp"
+                android:src="@drawable/m002"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_gravity="center|left"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/task_container_money"
+                        android:text="$10.50"
+                        android:textSize="24sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/task_container_shine1"
+                            android:src="@drawable/ic_brightness_2_black_24dp"
+                            android:tint="@color/colorYellow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <ImageView
+                            android:id="@+id/task_container_shine2"
+                            android:tint="@color/colorYellow"
+                            android:src="@drawable/ic_brightness_2_black_24dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <ImageView
+                            android:id="@+id/task_container_shine3"
+                            android:tint="@color/colorYellow"
+                            android:src="@drawable/ic_brightness_2_black_24dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <ImageView
+                            android:id="@+id/task_container_shine4"
+                            android:tint="@color/colorYellow"
+                            android:src="@drawable/ic_brightness_2_black_24dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <ImageView
+                            android:id="@+id/task_container_shine5"
+                            android:tint="@android:color/darker_gray"
+                            android:src="@drawable/ic_brightness_2_black_24dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/task_container_click"
+                            android:textSize="16sp"
+                            android:text="(16)"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/task_container_accept"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/circle_button"
+                    android:drawableLeft="@drawable/ic_add_black_24dp"
+                    android:drawableTint="@color/colorWhite"
+                    android:text="Accept"
+                    android:gravity="center|left"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="#fff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:background="@drawable/layout_list"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_margin="16dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="Details"
+                        android:textColor="@color/colorBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/task_container_content"
+                        android:text="@string/task_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <include layout="@layout/underline2"/>
+                    <TextView
+                        android:text="Participator"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/colorBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <ListView
+                        android:id="@+id/task_container_apply_user"
+                        android:layout_marginTop="8dp"
+                        android:clickable="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </ListView>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

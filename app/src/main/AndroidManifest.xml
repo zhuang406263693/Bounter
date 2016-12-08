@@ -18,9 +18,11 @@
         <activity android:name=".Activity.MainActivity">
         </activity>
         <activity android:name=".Activity.RegisterActivity"></activity>
-        <activity android:name=".Activity.ReleaseActivity"
-            android:windowSoftInputMode="adjustPan">
+        <activity android:name=".Activity.ReleaseActivity">
         </activity>
+        <activity android:name=".Activity.ChangePasswordActivity"></activity>
+        <activity android:name=".Activity.VerifyActivity"></activity>
+        <activity android:name=".Activity.TaskActivity"></activity>
     </application>
 
 </manifest>

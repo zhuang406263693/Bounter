@@ -8,56 +8,66 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="460dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="8dp">
-
-            <android.support.design.widget.TextInputLayout
+            android:layout_margin="8dp">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/activity_release_title"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Event Name"
-                    android:inputType="text"
-                    android:textColor="#000"
-                    android:textSize="24sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputLayout
+                    <EditText
+                        android:id="@+id/activity_release_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Event Name"
+                        android:inputType="text"
+                        android:textColor="#000"
+                        android:textSize="24sp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/activity_release_address"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Location"
-                    android:inputType="text"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputLayout
+                    <EditText
+                        android:id="@+id/activity_release_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Location"
+                        android:inputType="text"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="110dp">
-
-                <EditText
-                    android:id="@+id/activity_release_content"
+                android:layout_height="wrap_content">
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Description"
-                    android:gravity="top|left"
-                    android:inputType="text"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="110dp">
+
+                    <EditText
+                        android:id="@+id/activity_release_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Description"
+                        android:gravity="top|left"
+                        android:inputType="text"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_marginLeft="8dp"
                 android:orientation="horizontal"
@@ -175,36 +185,43 @@
                         android:textSize="16sp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <EditText
-                    android:inputType="number"
-                    android:id="@+id/activity_release_money"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Price"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputLayout
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/activity_release_money"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Price"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <EditText
-                    android:inputType="text"
-                    android:id="@+id/activity_release_label"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_keyboard_arrow_down_grey600_24dp"
-                    android:hint="Label"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="wrap_content">
 
+                    <EditText
+                        android:inputType="text"
+                        android:id="@+id/activity_release_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_keyboard_arrow_down_grey600_24dp"
+                        android:hint="Label"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
@@ -227,15 +244,4 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/activity_release_publish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="#03a9f4"
-        android:padding="12dp"
-        android:text="PUBLISH"
-        android:textColor="#fff"
-        android:textSize="16sp" />
 </LinearLayout>

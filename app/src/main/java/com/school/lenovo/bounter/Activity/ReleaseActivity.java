@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,11 +25,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.school.lenovo.bounter.Fragment.SquareFragment;
 import com.school.lenovo.bounter.R;
 import com.school.lenovo.bounter.Util.ActivityController;
 import com.school.lenovo.bounter.Util.HttpUtil;
-import com.school.lenovo.bounter.Util.Token;
+import com.school.lenovo.bounter.Util.UserMessage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -97,7 +97,7 @@ public class ReleaseActivity extends AppCompatActivity {
         seekBar = (SeekBar) findViewById(R.id.activity_release_seekbar);
         label = (EditText) findViewById(R.id.activity_release_label);
         reward = (EditText) findViewById(R.id.activity_release_money);
-        publish = (Button) findViewById(R.id.activity_release_publish);
+//        publish = (Button) findViewById(R.id.activity_release_publish);
         image1 = (ImageView) findViewById(R.id.activity_release_iv_1);
         image2 = (ImageView) findViewById(R.id.activity_release_iv_2);
         image3 = (ImageView) findViewById(R.id.activity_release_iv_3);
@@ -194,10 +194,20 @@ public class ReleaseActivity extends AppCompatActivity {
             }
         });
 
-        publish.setOnClickListener(new View.OnClickListener() {
+//        publish.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                beginPost();
+//            }
+//        });
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public void onClick(View v) {
-                beginPost();
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.post:
+                        beginPost();
+                }
+                return true;
             }
         });
     }
@@ -223,7 +233,7 @@ public class ReleaseActivity extends AppCompatActivity {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    String result = HttpUtil.Release(Token.Token, title_text, address_text, content_text, start_text, end_text, seek_text, label_text, reward_text, imageText,imageCount);
+                    String result = HttpUtil.Release(UserMessage.Token, title_text, address_text, content_text, start_text, end_text, seek_text, label_text, reward_text, imageText,imageCount);
                     if (result.equals("发布成功")) {
                         Log.d("info","发布成功");
                         Message message = new Message();

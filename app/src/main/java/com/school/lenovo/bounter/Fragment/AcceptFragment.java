@@ -28,6 +28,8 @@ import java.util.List;
  */
 //ManagerFragment(任务管理下的fragment)，用于已接受任务信息的管理
 public class AcceptFragment extends Fragment {
+    private View view;
+    private String TAG = "AcceptFragment";
     private final int UPDATEUI = 0;
     private Context context;
     SquareFragmentAdapter squareFragmentAdapter;
@@ -50,7 +52,15 @@ public class AcceptFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_manager_accept,container,false);
+        Log.d(TAG,"????");
+//        if (view!=null){
+//            ViewGroup parent = (ViewGroup) view.getParent();
+//            if (parent!=null){
+//                parent.removeView(view);
+//            }
+//            return view;
+//        }
+        view = inflater.inflate(R.layout.fragment_manager_accept,container,false);
         context = getActivity().getBaseContext();
         squareFragmentAdapter = new SquareFragmentAdapter(context);
         recyclerView = (RecyclerView) view.findViewById(R.id.manager_accept_rv);
@@ -77,5 +87,11 @@ public class AcceptFragment extends Fragment {
             }
         }).start();
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG,"create");
     }
 }

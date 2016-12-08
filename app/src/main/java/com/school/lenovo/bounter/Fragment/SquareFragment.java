@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.school.lenovo.bounter.Activity.ReleaseActivity;
+import com.school.lenovo.bounter.Activity.TaskActivity;
 import com.school.lenovo.bounter.Adapter.SquareFragmentAdapter;
 import com.school.lenovo.bounter.Bean.Task;
 import com.school.lenovo.bounter.Bean.TaskListContainer;
@@ -114,6 +115,9 @@ public class SquareFragment extends Fragment {
             @Override
             public void OnItemClick(View view, int position) {
                 Toast.makeText(context,taskList.get(position).getTid(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), TaskActivity.class);
+                intent.putExtra("tid",taskList.get(position).getTid());
+                startActivity(intent);
             }
 
             @Override

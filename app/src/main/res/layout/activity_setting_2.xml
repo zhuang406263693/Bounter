@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!--第一部分：伸缩工具栏-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/activity_setting_abl"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/activity_setting_ctl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorAccent"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/activity_setting_tb"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="个人中心"
+                app:navigationIcon="@drawable/ic_keyboard_backspace_white_24dp"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!--第二部分：主要内容，NestedScrollView和ScrollView基本功能一致，只不过NestedScrollView可以兼容新的控件-->
+
+    <!--第三部分：漂浮按钮-->
+    <com.school.lenovo.bounter.Util.MyCircleImageView
+        android:visibility="visible"
+        android:id="@+id/activity_setting_iv"
+        android:src="@drawable/jpg"
+        android:layout_marginTop="100dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_anchor="@id/activity_setting_abl"
+        app:layout_anchorGravity="center" />
+    <TextView
+        android:text="name"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="180dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/activity_setting_iv"
+        app:layout_anchorGravity="center|bottom"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="6dp">
+            <android.support.v7.widget.CardView
+                android:clickable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_weight="0.33"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:gravity="center"
+                            android:layout_marginTop="4dp"
+                            android:text="我发布的任务"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_weight="0.33"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:gravity="center"
+                            android:layout_marginTop="4dp"
+                            android:text="我接受的任务"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:clickable="true"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_weight="0.33"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:gravity="center"
+                            android:text="40"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView" />
+
+                        <TextView
+                            android:gravity="center"
+                            android:text="我完成的任务"
+                            android:layout_marginTop="4dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@android:id/icon"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginRight="16dp"                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <LinearLayout
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@android:id/title"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:text="Ted"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginTop="2dp"
+                            android:textSize="14sp"
+                            android:layout_gravity="center"
+                            android:text="用户名"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <include layout="@layout/underline" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:clickable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@android:id/icon"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginRight="16dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <LinearLayout
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@android:id/title"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:text="13295977081"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginTop="2dp"
+                            android:id="@android:id/title"
+                            android:textSize="14sp"
+                            android:layout_gravity="center"
+                            android:text="手机"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <include layout="@layout/underline"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <!--卡片布局-->
+            <!--<include layout="@layout/underline"/>-->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackground"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@android:id/icon"
+                        android:layout_marginRight="16dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@android:id/title"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:text="031502348"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginTop="2dp"
+                            android:id="@android:id/title"
+                            android:textSize="14sp"
+                            android:layout_gravity="center"
+                            android:text="学号"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

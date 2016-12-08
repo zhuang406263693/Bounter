@@ -18,6 +18,26 @@ public class StringToJson {
         jsonObject.addProperty("token",token);
         return jsonObject.toString();
     }
+    public static String TidToJson(String tid){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("tid",tid);
+        return jsonObject.toString();
+    }
+    public static String VerifyToJson(String token,String sn,String password){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("token",token);
+        jsonObject.addProperty("sn",sn);
+        jsonObject.addProperty("password",password);
+        return jsonObject.toString();
+    }
+    public static String ChangeToJson(String token,String password_old,String password_1,String password_2){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("token",token);
+        jsonObject.addProperty("password_old",password_old);
+        jsonObject.addProperty("password_1",password_1);
+        jsonObject.addProperty("password_2",password_2);
+        return jsonObject.toString();
+    }
     public static String LoginToJson(String username,String password){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("username",username);

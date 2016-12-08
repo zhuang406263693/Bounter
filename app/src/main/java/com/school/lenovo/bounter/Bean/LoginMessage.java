@@ -6,7 +6,6 @@ package com.school.lenovo.bounter.Bean;
 //登陆信息的保存
 public class LoginMessage {
     private MyData data;
-
     public MyData getData() {
         return data;
     }
@@ -18,6 +17,15 @@ public class LoginMessage {
     public class MyData{
         private String token;
         private int expires_time;
+        private User user;
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
 
         public String getToken() {
             return token;

@@ -6,25 +6,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.school.lenovo.bounter.Bean.LoginMessage;
-import com.school.lenovo.bounter.Fragment.SquareFragment;
 import com.school.lenovo.bounter.R;
 import com.school.lenovo.bounter.Util.ActivityController;
 import com.school.lenovo.bounter.Util.HttpUtil;
-import com.school.lenovo.bounter.Util.StringToJson;
-import com.school.lenovo.bounter.Util.Token;
-
-import java.io.IOException;
-
-import okhttp3.Response;
+import com.school.lenovo.bounter.Util.UserMessage;
 
 /**
  * Created by lenovo on 2016/11/4.
@@ -48,13 +39,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         textView = (TextView) findViewById(R.id.openRegister);
         SharedPreferences sharedPreferences =  getSharedPreferences("my", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token","null");
+        String portrait = sharedPreferences.getString("portrait","null");
+        String username = sharedPreferences.getString("username","null");
+        String sn = sharedPreferences.getString("sn","null");
+        String phone = sharedPreferences.getString("phone","null");
+        String level = sharedPreferences.getString("level","null");
         if (!token.equals("null")){
-            Token.Token = token;
+            UserMessage.Token = token;
+            UserMessage.portrait = portrait;
+            UserMessage.username = username;
+            UserMessage.sn = sn;
+            UserMessage.level = level;
+            UserMessage.phone = phone;
             Intent intent = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(intent);
             finish();
         }
-
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,9 +89,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 case "登陆成功":
                                     SharedPreferences sharedPreferences =  getSharedPreferences("my", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putString("token",Token.Token);
+                                    editor.putString("token", UserMessage.Token);
+                                    editor.putString("username",UserMessage.username);
+                                    editor.putString("portrait",UserMessage.portrait);
+                                    editor.putString("sn",UserMessage.sn);
+                                    editor.putString("phone",UserMessage.phone);
+                                    editor.putString("level",UserMessage.level);
                                     editor.commit();
-
                                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent);
                                     finish();

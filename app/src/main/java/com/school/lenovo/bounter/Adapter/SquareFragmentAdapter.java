@@ -7,8 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 import com.school.lenovo.bounter.Bean.Task;
 import com.school.lenovo.bounter.R;
+import com.school.lenovo.bounter.Util.BitmapCache;
 
 import java.util.List;
 
@@ -22,9 +27,13 @@ public class SquareFragmentAdapter extends RecyclerView.Adapter{
     private final int TYPE_ITEM =1;
     private List<Task> taskList;
     private LayoutInflater inflater;
+    private ImageLoader imageLoader;
     public SquareFragmentAdapter(Context context){
         this.taskList = null;
         inflater = LayoutInflater.from(context);
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        imageLoader = new ImageLoader(queue,new BitmapCache());
     }
     public void initItem(List<Task> tasks){
         this.taskList = tasks;
@@ -32,7 +41,7 @@ public class SquareFragmentAdapter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM){
-            return new SquareViewHolder(inflater.inflate(R.layout.task_container,parent,false));
+            return new SquareViewHolder(inflater.inflate(R.layout.task_item,parent,false));
         }else if (viewType == TYPE_BOTTOM){
             return new FooterViewHolder(inflater.inflate(R.layout.task_footer,parent,false));
         }
@@ -42,11 +51,12 @@ public class SquareFragmentAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof SquareViewHolder){
-            SquareViewHolder squareViewHolder = (SquareViewHolder) holder;
+            final SquareViewHolder squareViewHolder = (SquareViewHolder) holder;
             squareViewHolder.place.setText(taskList.get(position).getAddress());
             squareViewHolder.money.setText(taskList.get(position).getReward());
             squareViewHolder.time.setText(taskList.get(position).getTime());
             squareViewHolder.title.setText(taskList.get(position).getTitle());
+            squareViewHolder.imageView.setImageUrl(taskList.get(position).getImage()[0],imageLoader);
         }
     }
 
@@ -68,12 +78,14 @@ public class SquareFragmentAdapter extends RecyclerView.Adapter{
     }
     class SquareViewHolder extends RecyclerView.ViewHolder{
         TextView title,time,place,money;
+        NetworkImageView imageView;
         public SquareViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.task_title);
             time = (TextView) itemView.findViewById(R.id.task_time);
             place = (TextView) itemView.findViewById(R.id.task_place);
             money = (TextView) itemView.findViewById(R.id.task_money);
+            imageView = (NetworkImageView) itemView.findViewById(R.id.task_image);
         }
     }
     class FooterViewHolder extends RecyclerView.ViewHolder{

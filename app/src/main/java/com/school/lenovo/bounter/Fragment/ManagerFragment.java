@@ -4,11 +4,12 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +30,16 @@ public class ManagerFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager viewPager;
 
-    List<Fragment> fragmentList = new ArrayList<>();
-    List<String> fragmentTitle = new ArrayList<>();
+    List<Fragment> fragmentList;
+    List<String> fragmentTitle;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_all);
         drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         toolbar.setTitle("任务管理");
@@ -49,6 +55,7 @@ public class ManagerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("info","调用");
         View rootView = inflater.inflate(R.layout.fragment_manager,container,false);
         tabLayout = (TabLayout) rootView.findViewById(R.id.fragment_manager_tabLayout);
         viewPager = (ViewPager) rootView.findViewById(R.id.fragment_manager_viewPager);
@@ -58,6 +65,9 @@ public class ManagerFragment extends Fragment {
     }
 
     public void setViewPager() {
+        Log.d("info","???");
+        fragmentList = new ArrayList<>();
+        fragmentTitle = new ArrayList<>();
         AcceptFragment acceptFragment = new AcceptFragment();
         PublishFragment publishFragment = new PublishFragment();
         fragmentList.add(acceptFragment);
@@ -67,7 +77,9 @@ public class ManagerFragment extends Fragment {
 
         CustomPagerAdapter customPagerAdapter = new CustomPagerAdapter(getFragmentManager(),
                 fragmentList,fragmentTitle);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(customPagerAdapter);
+//        viewPager.setOffscreenPageLimit(2);
     }
 
     public void setTabLayout() {
@@ -75,7 +87,7 @@ public class ManagerFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
     }
 }
-class CustomPagerAdapter extends FragmentPagerAdapter {
+class CustomPagerAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> fragmentList;
     private List<String> fragmentTitle;
 
@@ -95,7 +107,6 @@ class CustomPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return fragmentTitle.get(position);
     }
-
     @Override
     public Fragment getItem(int position) {
         return fragmentList.get(position);
