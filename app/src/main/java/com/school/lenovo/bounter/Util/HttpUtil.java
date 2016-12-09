@@ -39,6 +39,7 @@ public class HttpUtil {
     public static final String MYRECEIVE = "Task/getMyReceive";//我接受的任务
     public static final String RELEASE = "Task/release";//发布任务
     public static final String BROWSE = "Task/browse"; //查看任务
+    public static final String APPLY = "Task/apply"; //申请任务
     public static final String VERIFY = "User/verify";//身份认证
     public static final String PROFILE = "User/getProfile";//获取用户信息
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -199,6 +200,34 @@ public class HttpUtil {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    public static String taskApply(String tid){
+        String jsonString = StringToJson.ApplyToJson(tid);
+        Log.d(TAG,jsonString);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(JSON,jsonString);
+        Request request = new Request.Builder()
+                .url(BASE + APPLY)
+                .method("Post",null)
+                .post(requestBody)
+                .build();
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            String result =  new String(response.body().bytes());
+            Log.d(TAG,result);
+            if (response.message().equals("OK")){
+                if (result.contains('"' + "error_code" + '"' + ":0")){
+                    return "申请成功";
+                }else{
+                    return "申请失败";
+                }
+            }else{
+                return "申请失败";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "申请失败";
         }
     }
     //任务获取，参数为：page:页数，size:每页的数量,order_by:排序方法,state:任务状态（详情看文档），未完成

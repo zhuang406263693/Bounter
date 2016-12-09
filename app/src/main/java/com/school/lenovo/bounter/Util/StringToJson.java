@@ -1,12 +1,7 @@
 package com.school.lenovo.bounter.Util;
 
 import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
 
 /**
  * Created by lenovo on 2016/11/5.
@@ -16,6 +11,12 @@ public class StringToJson {
     public static String TokenToJson(String token){
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("token",token);
+        return jsonObject.toString();
+    }
+    public static String ApplyToJson(String tid){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("token",UserMessage.Token);
+        jsonObject.addProperty("tid",tid);
         return jsonObject.toString();
     }
     public static String TidToJson(String tid){

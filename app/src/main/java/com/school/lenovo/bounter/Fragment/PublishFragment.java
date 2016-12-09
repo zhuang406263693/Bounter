@@ -2,6 +2,7 @@ package com.school.lenovo.bounter.Fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.school.lenovo.bounter.Activity.TaskActivity;
 import com.school.lenovo.bounter.Adapter.SquareFragmentAdapter;
 import com.school.lenovo.bounter.Bean.Task;
 import com.school.lenovo.bounter.R;
@@ -38,10 +40,7 @@ public class PublishFragment extends Fragment {
         public boolean handleMessage(Message msg) {
             switch (msg.what){
                 case UPDATEUI:
-                    if (taskList!=null) {
-                        squareFragmentAdapter.initItem(taskList);
-                        squareFragmentAdapter.notifyDataSetChanged();
-                    }
+                    updateUi();
                     break;
             }
             return false;
@@ -68,6 +67,8 @@ public class PublishFragment extends Fragment {
             @Override
             public void OnItemClick(View view, int position) {
                 Toast.makeText(context,taskList.get(position).getTid(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), TaskActivity.class);
+                startActivity(intent);
             }
 
             @Override
@@ -85,5 +86,11 @@ public class PublishFragment extends Fragment {
             }
         }).start();
         return view;
+    }
+    private void updateUi(){
+        if (taskList!=null) {
+            squareFragmentAdapter.initItem(taskList);
+            squareFragmentAdapter.notifyDataSetChanged();
+        }
     }
 }
